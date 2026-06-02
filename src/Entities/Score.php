@@ -1,0 +1,10 @@
+<?php 
+
+final class Score 
+{
+    
+}
+
+
+
+?>
