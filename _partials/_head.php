@@ -16,5 +16,4 @@
 <!-- <body class="bg-[url(/assets/images/BACKGROUND-IMAGE.png)] bg-cover bg-center w-full 
     h-screen flex justify-center items-center "> -->
 
-<body style="background-image:url('/POO-PROJET-MINIQUIZZ/assets/images/9.M-Desktop-Classement.png'); 
-background-size:cover" class="px-4">
+<body class="px-4 py-8 min-h-screen flex flex-col justify-between bg-[url(../images/background-Mobile.png)] bg-center bg-cover md:bg-[url(../images/background-Desktop.png)] ">
