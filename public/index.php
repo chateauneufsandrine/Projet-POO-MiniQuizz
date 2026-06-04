@@ -19,7 +19,7 @@
 
             <h2 class="orbitron text-[12px] text-pink-700 mb-2 flex flex-row gap-2"> <img src="../assets/images/star.png" alt="" class="w-3 h-3">Inscription</h2>
 
-            <form action="traitement-inscription.php" method="POST" class="flex flex-col gap-2">
+            <form form enctype="multipart/form-data" action="../process/traitement-inscription.php" method="POST" class="flex flex-col gap-2">
                 <input type="text" name="pseudo" placeholder="Pseudo"
                     class="bg-[#1A1F29]/60 border border-white/10 rounded-md text-white text-xs px-4 py-2">
 
