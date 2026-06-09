@@ -2,12 +2,19 @@
 
 final class Question
 {
+
+    private Qcm $qcm;
+    private array $reponses;
+    
     public function __construct(
         private int $id,
         private string $intitule,
         private int $tempsLimite,
-        private Qcm $qcm
-    ) {}
+
+    ) {
+        $this->reponses = [];
+
+    }
 
     public function getId(): int
     {
@@ -52,4 +59,26 @@ final class Question
         $this->qcm = $qcm;
         return $this;
     }
+
+ public function getReponses(): array
+    {
+        return $this->reponses;
+    }
+
+    public function setReponses(array $reponses): self
+    {
+        $this->reponses = $reponses;
+        return $this;
+    }
+
+    public function addReponse(Reponse $reponse): self
+    {
+        $this->reponses[] = $reponse;
+        return $this;
+    }
+
+
+
+
+
 }

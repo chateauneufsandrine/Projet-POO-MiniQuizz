@@ -6,7 +6,6 @@ final class Qcm
         private int $id,
         private string $theme,
         private string $description,
-        private array $questions
     ) {}
 
     public function getId(): int
@@ -42,30 +41,30 @@ final class Qcm
         return $this;
     }
 
-    public function getQuestions(): array
-    {
-        return $this->questions;
-    }
+    // public function getQuestions(): array
+    // {
+    //     return $this->questions;
+    // }
 
-    public function setQuestions(array $questions): self
-    {
-        $this->questions = $questions;
-        return $this;
-    } 
+    // public function setQuestions(array $questions): self
+    // {
+    //     $this->questions = $questions;
+    //     return $this;
+    // } 
 
-    public function addQuestion(Question $question): self
-    {
-        $this->questions[] = $question;
-        return $this;
-    }
+    // public function addQuestion(Question $question): self
+    // {
+    //     $this->questions[] = $question;
+    //     return $this;
+    // }
 
-    public function removeQuestion(Question $question): self
-    {
-        $key = array_search($question, $this->questions, true);
-        if ($key !== false) {
-            unset($this->questions[$key]);
-            $this->questions = array_values($this->questions);
-        }
-        return $this;
-    }
+    // public function removeQuestion(Question $question): self
+    // {
+    //     $key = array_search($question, $this->questions, true);
+    //     if ($key !== false) {
+    //         unset($this->questions[$key]);
+    //         $this->questions = array_values($this->questions);
+    //     }
+    //     return $this;
+    // }
 }

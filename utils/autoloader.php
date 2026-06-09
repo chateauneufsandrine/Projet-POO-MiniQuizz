@@ -10,9 +10,6 @@ spl_autoload_register(function ($className) {
         case substr($className, -10) === 'Repository':
             $directory = 'Repositories';
             break;
-        case substr($className, -7) === 'Manager':
-            $directory = 'Managers';
-            break;
         case substr($className, -6) === 'Mapper':
             $directory = 'Mappers';
             break;
@@ -29,8 +26,5 @@ spl_autoload_register(function ($className) {
         require $file;
     }
 });
-
-?>
-
 
 ?>

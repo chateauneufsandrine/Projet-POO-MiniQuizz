@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-final class Score 
+final class Score
 {
     public function __construct(
         private int $id,
@@ -32,7 +32,7 @@ final class Score
         return $this;
     }
 
- public function getQcm(): Qcm
+    public function getQcm(): Qcm
     {
         return $this->qcm;
     }
@@ -52,7 +52,7 @@ final class Score
     {
         $this->joueur_id = $joueur_id;
         return $this;
-    } 
+    }
 
 
     public function getChrono(): int
@@ -66,7 +66,3 @@ final class Score
         return $this;
     }
 }
-
-
-
-?>

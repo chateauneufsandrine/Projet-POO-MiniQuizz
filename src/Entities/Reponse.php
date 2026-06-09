@@ -6,7 +6,7 @@ final class Reponse
         private int $id,
         private string $intitule,
         private bool $correct_ou_non,
-        private array $questions
+        private Question $question
     ) {}
 
     public function getId(): int
@@ -42,16 +42,26 @@ final class Reponse
         return $this;
     }
 
-public function getQuestions(): array
+public function getQuestion(): Question
     {
-        return $this->questions;
+        return $this->question;
     }
 
-    public function setQuestions(array $questions): self
+    public function setQuestion(Question $question): self
     {
-        $this->questions = $questions;
+        $this->question = $question;
         return $this;
-    } 
+    }
+// public function getQuestions(): array
+//     {
+//         return $this->questions;
+//     }
+
+//     public function setQuestions(array $questions): self
+//     {
+//         $this->questions = $questions;
+//         return $this;
+//     } 
 
     public function addQuestion(Question $question): self
     {
