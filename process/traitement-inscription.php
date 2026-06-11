@@ -67,7 +67,6 @@ if (!password_verify($mot_de_passe, $joueur->getMot_de_passe())) {
 }
 
 $_SESSION["joueur"] = $joueur;
-$_SESSION['theme'] = null; 
 // stocke tout le tableau, tout le joueur en session (id+pseudo)
 // remet le thème à NULL à chaque connexion
 // ou
@@ -78,3 +77,4 @@ $_SESSION['theme'] = null;
 
 header("Location: ../public/index.php");
 exit;
+ ?>

@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
-    <script src="../assets/styles/main.js" defer></script>
+    <script src="../assets/scripts/main.js" defer></script>
 </head>
 
 <!-- <body class="bg-[url(/assets/images/BACKGROUND-IMAGE.png)] bg-cover bg-center w-full 

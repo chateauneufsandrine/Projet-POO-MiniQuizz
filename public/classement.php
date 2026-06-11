@@ -1,57 +1,90 @@
-<?php require_once "../_partials/_head.php" ?>
+<?php
+require_once "../utils/autoloader.php";
+session_start();
+
+require_once "../utils/isConnected.php";
+require_once "../utils/db_connexion.php";
+require_once "../utils/isThemeChosen.php";
+
+/** @var Joueur $joueur */
+$joueur = $_SESSION['joueur'];
+
+/** @var Qcm $qcm */
+$qcm = $_SESSION['qcm'];
+
+// Récupérer le classement
+$scoreRepo = new ScoreRepository($db);
+$joueurRepo = new JoueurRepository($db);
+
+$scores = $scoreRepo->findAllByQcm($qcm, $joueurRepo);
+// var_dump($scores);
+// die();
+
+
+require_once "../_partials/_head.php";
+?>
 
 <!-- HEADER -->
-<div class="flex flex-col items-center justify-center gap-2 px-4">
-    <img src="../assets/images/trophee.png" alt="" class="w-16 h-16">
-    <h1 class="text-2xl orbitron font-extrabold text-[#00FFE7] md:text-4xl">Fin de partie !</h1>
-    <div class="flex flex-row items-center gap-2">
-        <img src="../assets/images/terre (1).png" alt="" class="w-8 h-8">
-        <p class="orbitron text-white text-sm md:text-xl">Thème Cartographie</p>
-    </div>
+<div class="flex flex-col items-center gap-2">
+    <img src="../assets/images/trophee.png" alt="trophée" class="w-20 h-20">
+    <h1 class="text-3xl orbitron font-extrabold text-[#00FFE7] md:text-5xl">Fin de partie !</h1>
+</div>
+
+<!-- THÈME -->
+<div class="flex flex-row items-center justify-center gap-2 mt-2">
+    <img src="../assets/images/terre (1).png" alt="" class="w-8 h-8">
+    <p class="text-white orbitron text-sm">Thème <?= ucfirst($qcm->getTheme()) ?></p>
 </div>
 
 <!-- CLASSEMENT -->
 <div class="w-full max-w-md mx-auto px-4 mt-6">
-    <section class="bg-[#11151C]/75 border border-white/35 rounded-lg px-4 pt-6 pb-4 flex flex-col gap-3">
+    <div class="bg-[#11151C]/75 border border-white/20 rounded-lg p-4">
+        <h2 class="text-[#FF006E] orbitron text-sm mb-4">Classement final</h2>
 
-        <h2 class="orbitron text-[12px] text-[#FF006E] mb-2">Classement final</h2>
+        <div class="flex flex-col gap-3">
+            <?php foreach ($scores as $index => $score) :
+                $estJoueurCourant = $score->getJoueur()->getId() === $joueur->getId();
+                $rang = $index + 1;
 
-        <!-- 1er -->
-        <div class="bg-[#1A1F29]/60 border border-white/20 rounded-lg px-4 py-3 flex items-center gap-3">
-            <span class="w-8 h-8 flex items-center justify-center bg-white/10 rounded text-xs font-bold text-white orbitron">Hb</span>
-            <span class="text-white text-sm flex-1">Henria b</span>
-            <span class="orbitron text-xs text-white">430 PTS</span>
+                // Couleur selon le rang
+                if ($rang === 1) $couleur = 'border-[#F9C80E] bg-[#F9C80E]/10';
+                elseif ($rang === 2) $couleur = 'border-[#C0C0C0] bg-[#C0C0C0]/10';
+                elseif ($rang === 3) $couleur = 'border-[#CD7F32] bg-[#CD7F32]/10';
+                else $couleur = 'border-white/10 bg-[#1A1F29]/60';
+
+                // Surligner le joueur courant
+                if ($estJoueurCourant) $couleur .= ' ring-2 ring-[#00FFE7]';
+            ?>
+                <div class="flex items-center gap-3 border rounded-lg px-4 py-3 <?= $couleur ?>">
+                    <!-- RANG -->
+                    <span class="orbitron text-white text-xs w-4"><?= $rang ?></span>
+
+                    <!-- INITIALES -->
+                    <span class="w-10 h-10 flex items-center justify-center rounded text-xs font-bold orbitron
+                        <?= $estJoueurCourant ? 'bg-[#FF006E] text-white' : 'bg-white/10 text-white' ?>">
+                        <?= strtoupper(substr($score->getJoueur()->getPseudo(), 0, 2)) ?>
+                    </span>
+
+                    <!-- PSEUDO -->
+                    <span class="text-white text-sm flex-1 orbitron"><?= htmlspecialchars($score->getJoueur()->getPseudo()) ?></span>
+
+                    <!-- SCORE -->
+                    <span class="orbitron font-extrabold text-white">
+                        <?= $score->getScore() ?>
+                        <span class="text-xs text-white/50">PTS</span>
+                    </span>
+                </div>
+            <?php endforeach; ?>
         </div>
-
-        <!-- 2ème -->
-        <div class="bg-[#F9C80E]/20 border border-[#F9C80E] rounded-lg px-4 py-3 flex items-center gap-3 shadow-[0_0_10px_#F9C80E]">
-            <span class="w-8 h-8 flex items-center justify-center bg-[#F9C80E]/30 rounded text-xs font-bold text-[#F9C80E] orbitron">CO</span>
-            <span class="text-white text-sm flex-1">Clovis O</span>
-            <span class="orbitron text-xs text-[#F9C80E]">430 PTS</span>
-        </div>
-
-        <!-- 3ème -->
-        <div class="bg-[#FF006E]/20 border border-[#FF006E] rounded-lg px-4 py-3 flex items-center gap-3 shadow-[0_0_10px_#FF006E]">
-            <span class="w-8 h-8 flex items-center justify-center bg-[#FF006E]/30 rounded text-xs font-bold text-[#FF006E] orbitron">SCH</span>
-            <span class="text-white text-sm flex-1">Sandrine Ch</span>
-            <span class="orbitron text-xs text-[#FF006E]">430 PTS</span>
-        </div>
-
-        <!-- 4ème -->
-        <div class="bg-[#1A1F29]/60 border border-white/20 rounded-lg px-4 py-3 flex items-center gap-3">
-            <span class="w-8 h-8 flex items-center justify-center bg-[#FF006E]/40 rounded text-xs font-bold text-white orbitron">AY</span>
-            <span class="text-white text-sm flex-1">Aliya Y</span>
-            <span class="orbitron text-xs text-white">430 PTS</span>
-        </div>
-
-    </section>
+    </div>
 </div>
 
 <!-- BOUTON REJOUER -->
 <div class="flex justify-center mt-6">
-    <a href="index.php" class="inline-flex items-center gap-2 bg-[#FF006E] border border-[#f0e2e81f] rounded px-8 py-3 text-white orbitron text-sm transition-all hover:bg-[#FF006E]/80 hover:shadow-[0_0_20px_#FF006E] hover:scale-105">
+    <a href="../process/traitement-rejouer.php"
+        class="inline-flex items-center gap-2 bg-[#271033]/95 border border-[#FF006E] rounded-lg px-8 py-3 text-[#FF006E] orbitron text-sm transition-all hover:bg-[#FF006E]/20 hover:shadow-[0_0_20px_#FF006E]">
         Rejouer
-        <img src="../assets/images/fusee.png" alt="" class="w-5 h-5">
+        <span>↺</span>
     </a>
 </div>
 

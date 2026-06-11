@@ -15,9 +15,10 @@ unset($_SESSION['derniere_reponse']);
 
 // Fin du quiz ?
 if ($_SESSION['index_question'] >= count($_SESSION['questions'])) {
-    header('Location: ../public/resultat.php');
+    header('Location: ./traitement-fin-partie.php');
     exit();
 }
 
 header('Location: ../public/questions.php');
 exit();
+ ?>

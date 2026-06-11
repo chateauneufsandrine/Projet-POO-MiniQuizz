@@ -35,15 +35,27 @@ final class JoueurRepository
         ]);
     }
 
-// Méthode qui récupère tous les joueurs. 
-// Retourne un tableau array d'objets Joueur.
-public function findAll(): array
-{
-    $request = $this->db->prepare('SELECT * FROM joueur');
-    $request->execute();
-    $joueurs = $request->fetchAll(PDO::FETCH_ASSOC);
+    // Méthode qui récupère tous les joueurs. 
+    // Retourne un tableau array d'objets Joueur.
+    public function findAll(): array
+    {
+        $request = $this->db->prepare('SELECT * FROM joueur');
+        $request->execute();
+        $joueurs = $request->fetchAll(PDO::FETCH_ASSOC);
 
-    return array_map(fn($j) => JoueurMapper::mapToObject($j), $joueurs);
-}
+        return array_map(fn($j) => JoueurMapper::mapToObject($j), $joueurs);
+    }
 
+    public function findById(int $id): Joueur
+    {
+        $request = $this->db->prepare('SELECT * FROM joueur WHERE id = :id');
+        $request->execute([
+            ':id' => $id
+        ]);
+
+        $joueurData =  $request->fetch(PDO::FETCH_ASSOC);
+        
+        return JoueurMapper::mapToObject($joueurData);
+
+    }
 }

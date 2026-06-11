@@ -5,9 +5,9 @@ final class Score
     public function __construct(
         private int $id,
         private int $score,
-        private Qcm $qcm,
-        private int $joueur_id,
-        private int $chrono
+        private Qcm $qcm,         // ← objet Qcm conservé
+        private Joueur $joueur,
+        private string $chrono,    // ← corrigé int → string
     ) {}
 
     public function getId(): int
@@ -43,24 +43,23 @@ final class Score
         return $this;
     }
 
-    public function getJoueur_id(): int
+    public function getJoueur(): Joueur
     {
-        return $this->joueur_id;
+        return $this->joueur;
     }
 
-    public function setJoueur_id(int $joueur_id): self
+    public function setJoueur(Joueur $joueur): self
     {
-        $this->joueur_id = $joueur_id;
+        $this->joueur = $joueur;
         return $this;
     }
 
-
-    public function getChrono(): int
+    public function getChrono(): string
     {
         return $this->chrono;
     }
 
-    public function setChrono(int $chrono): self
+    public function setChrono(string $chrono): self
     {
         $this->chrono = $chrono;
         return $this;

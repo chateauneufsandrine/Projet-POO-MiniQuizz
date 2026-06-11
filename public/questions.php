@@ -9,7 +9,18 @@ isset($_SESSION['joueur']) ? $joueur = $_SESSION['joueur'] : $joueur = null;
 
 $qcm = $_SESSION['qcm'];
 $questions = $_SESSION['questions'];
-$questionActuelle = $questions[$_SESSION['index_question']];
+
+$index = $_SESSION['index_question'];
+
+// session_destroy();
+// die();
+
+if (!isset($questions[$index])) {
+    header('Location: ./classement.php');
+    exit();
+}
+
+$questionActuelle = $questions[$index];
 $reponses = $questionActuelle->getReponses();
 $derniereReponse = $_SESSION['derniere_reponse'] ?? null;
 
@@ -57,9 +68,12 @@ require_once "../_partials/_head.php";
                 <span class="w-8 h-8 flex items-center justify-center border border-[#F9C80E] text-[#F9C80E] rounded text-xs font-bold">
                     <?= $lettres[$index] ?>
                 </span>
-                <span class="text-sm"><?= $reponse->getIntitule() ?></span>
+
+                <span class="text-sm"><?= htmlspecialchars($reponse->getIntitule()) ?></span>
             </label>
         <?php } ?>
+
+        <input type="hidden" name="temps_question" id="temps-question" value="0">
 
         <button type="submit" id="btn-valider"
             class="items-center gap-2 bg-[#271033]/95 border border-[#FF006E] rounded-lg px-6 py-2 text-[#FF006E] orbitron text-sm transition-all hover:bg-[#00FFE7]/20 hover:shadow-[0_0_20px_#00FFE7]">

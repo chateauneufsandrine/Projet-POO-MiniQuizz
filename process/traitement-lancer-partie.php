@@ -30,8 +30,17 @@ foreach ($questions as $question) {
         // $reponseRepo->findByQuestionId($question->getId(), $question)
         $reponseRepo->findByQuestionId($question)
     );
-}
 
+
+//  Mélanger les réponses de chaque question
+    $reponses = $question->getReponses();
+    shuffle($reponses);
+    $question->setReponses($reponses);
+
+
+}
+// /  Mélanger l'ordre des questions
+shuffle($questions);
 $_SESSION['questions'] = $questions;
 
 // indicateur à par qui permet de savoir à quelle question on est
@@ -43,3 +52,4 @@ $_SESSION['index_question'] = 0;
 // Tout est ok → on redirige vers questions.php
 header("Location: ../public/questions.php");
 exit();
+?>
